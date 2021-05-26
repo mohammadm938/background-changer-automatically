@@ -96,11 +96,11 @@ class app():
         os.system("clear")
         try:
             result = int(
-                input(colors.starter+"What is the time interval between photos? (write just second number)"))
+                input(colors.starter+"What is the time interval between photos? (write just minuts number)"))
         except:
             print(colors.error+f"it's not a number{emojies.poker} try again")
             result = int(
-                input(colors.starter+"What is the time interval between photos? (write just second number)"))
+                input(colors.starter+"What is the time interval between photos? (write just minuts number)"))
         return result
 
 
@@ -119,7 +119,7 @@ class methods:
             os.system(
                 f"gsettings set org.gnome.desktop.background picture-uri 'file://{path}{picNames[generatNum]}'")
             print(colors.success +
-                  f"changed to {picName[generatNum]}"+colors.starter)
+                  f"changed to {picNames[generatNum]}"+colors.starter)
 
             time.sleep(interval * 60)
             lastNum = generatNum
@@ -139,7 +139,7 @@ class methods:
             os.system(
                 f"gsettings set org.gnome.desktop.background picture-uri 'file://{path}{picNames[generatNum]}'")
             print(colors.success +
-                  f"changed to {picName[generatNum]}"+colors.starter)
+                  f"changed to {picNames[generatNum]}"+colors.starter)
 
             time.sleep(interval * 60)
             lastNum = generatNum
