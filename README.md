@@ -4,7 +4,9 @@ it helps you to change desktop background image Automatically
 
 # How To Use
 pip install emoji
+
 pip install pathlib
+
 pip install colorama
 
 first you need to choose your methods 
