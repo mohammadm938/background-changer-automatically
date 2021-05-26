@@ -3,6 +3,10 @@
 it helps you to change desktop background image Automatically
 
 # How To Use
+pip install emoji
+pip install pathlib
+pip install colorama
+
 first you need to choose your methods 
     first method : You give the location to the script of your image that you want to select image, after choosing you must select you pic that you want by write it     name with format of file like = > car.jpg
     
