@@ -3,7 +3,6 @@ import random
 import time
 import emoji
 import pathlib
-from numpy import pi
 import psutil
 from colorama import Fore
 
