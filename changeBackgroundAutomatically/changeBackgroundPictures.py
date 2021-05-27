@@ -3,7 +3,10 @@ import random
 import time
 import emoji
 import pathlib
+from numpy import pi
+import psutil
 from colorama import Fore
+
 
 picNames = []
 path = ""
@@ -18,6 +21,7 @@ class colors:
     starter = Fore.LIGHTBLUE_EX
     success = Fore.LIGHTGREEN_EX
     error = Fore.LIGHTRED_EX
+    msg = Fore.LIGHTYELLOW_EX
     # equal = Fore.LIGHTBLACK_EX
 
 
@@ -49,6 +53,12 @@ class app():
             exit()
         else:
             return result
+
+    def showUsage():
+        cpu_Usage = psutil.cpu_percent()
+        ram_Usage = psutil.virtual_memory().percent
+        print(colors.msg+f"Cpu: {cpu_Usage}%")
+        print(colors.msg+f"Ram: {ram_Usage}%"+colors.starter)
 
     def setPicNames():
         isCountinue = True
@@ -103,67 +113,47 @@ class app():
                 input(colors.starter+"What is the time interval between photos? (write just minuts number)"))
         return result
 
+    def functor(path, picNames):
+        interval = app.setTimeBetweenPic()
+        lenPic = len(picNames)
+        counter = 1
+        lastNum = -1
+        picShow=[]
+        while counter <= 2*(lenPic):
+            app.showUsage();
+            generatNum = random.randint(0, lenPic-1)
+            while lastNum == generatNum:  # use lastNum becuase we want always change pic
+                generatNum = random.randint(0, lenPic-1)
+            os.system(
+                f"gsettings set org.gnome.desktop.background picture-uri 'file://{path}{picNames[generatNum]}'")
+            
+            picShow.append(picNames[generatNum])
+            for item in picShow:
+                print(colors.success +f"changed to {item}"+colors.starter)
+
+            time.sleep(interval)
+            lastNum = generatNum
+            counter += 1
+            os.system("clear")
+
+
 
 class methods:
     def selectPictures():
         path = app.setPath()
         picNames = app.setPicNames()
-        interval = app.setTimeBetweenPic()
-        lenPic = len(picNames)
-        counter = 1
-        lastNum = -1
-        while counter < 2*(lenPic-1):
-            generatNum = random.randint(0, lenPic-1)
-            while lastNum == generatNum:  # use lastNum becuase we want always change pic
-                generatNum = random.randint(0, lenPic-1)
-            os.system(
-                f"gsettings set org.gnome.desktop.background picture-uri 'file://{path}{picNames[generatNum]}'")
-            print(colors.success +
-                  f"changed to {picNames[generatNum]}"+colors.starter)
-
-            time.sleep(interval * 60)
-            lastNum = generatNum
-            counter += 1
+        app.functor(path, picNames)
 
     def allImgOnFile():
         path = app.setPath()
         picNames = app.load_images_from_folder(path)
-        interval = app.setTimeBetweenPic()
-        lenPic = len(picNames)
-        counter = 1
-        lastNum = -1
-        while counter < 2*(lenPic-1):
-            generatNum = random.randint(0, lenPic-1)
-            while lastNum == generatNum:  # use lastNum becuase we want always change pic
-                generatNum = random.randint(0, lenPic-1)
-            os.system(
-                f"gsettings set org.gnome.desktop.background picture-uri 'file://{path}{picNames[generatNum]}'")
-            print(colors.success +
-                  f"changed to {picNames[generatNum]}"+colors.starter)
-
-            time.sleep(interval * 60)
-            lastNum = generatNum
-            counter += 1
+        app.functor(path, picNames)
 
     def defaultPath():
         path = pathlib.Path(__file__).parent.absolute()
         path = (f"{path}/pic/")
         picNames = app.load_images_from_folder(path)
-        interval = app.setTimeBetweenPic()
-        lenPic = len(picNames)
-        counter = 1
-        lastNum = -1
-        while counter < 2*(lenPic-1):
-            generatNum = random.randint(0, lenPic-1)
-            while lastNum == generatNum:  # use lastNum becuase we want always change pic
-                generatNum = random.randint(0, lenPic-1)
-            os.system(
-                f"gsettings set org.gnome.desktop.background picture-uri 'file://{path}{picNames[generatNum]}'")
-            print(colors.success +
-                  f"changed to {picNames[generatNum]}"+colors.starter)
-            time.sleep(interval * 60)
-            lastNum = generatNum
-            counter += 1
+        app.functor(path, picNames)
 
 
 result = app.wellcome()
