@@ -130,7 +130,7 @@ class app():
             for item in picShow:
                 print(colors.success +f"changed to {item}"+colors.starter)
 
-            time.sleep(interval)
+            time.sleep(interval*60)
             lastNum = generatNum
             counter += 1
             os.system("clear")
